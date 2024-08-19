@@ -15,6 +15,7 @@ const todoList = () => {
       .map((task) => ({
         title: task.title,
         completion: task.completed === true ? "x" : " ",
+        date: task.dueDate,
       }));
   };
 
@@ -38,6 +39,7 @@ const todoList = () => {
       .map((task) => ({
         title: task.title,
         completion: task.completed === true ? "x" : " ",
+        date: task.dueDate,
       }));
   };
 
@@ -46,7 +48,10 @@ const todoList = () => {
     // as per the format given above.
     // [ ] Submit assignment 2022-07-21
     return list
-      .map((eachTask) => `[${eachTask.completion}] ${eachTask.title}`)
+      .map(
+        (eachTask) =>
+          `[${eachTask.completion}] ${eachTask.title} ${eachTask.date ?? ""}`
+      )
       .join("\n");
   };
 
