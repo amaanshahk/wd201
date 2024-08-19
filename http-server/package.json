@@ -10,6 +10,7 @@
   "author": "amaanshahk",
   "license": "ISC",
   "dependencies": {
+    "minimist": "^1.2.8",
     "start": "^5.1.0"
   }
 }
