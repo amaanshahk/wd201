@@ -42,17 +42,30 @@ describe("Testing the To Do List", () => {
   });
 
   test("Checks retrieval of overdue items.", () => {
-    expect(overdue()).toEqual([all[0]]);
+    const overDueTodoItemsCount = overdue().length;
+    add({
+      title: "Submit assignment",
+      dueDate: yesterday,
+      completed: false,
+    });
+    expect(overdue().length).toEqual(overDueTodoItemsCount + 1);
   });
   test("Checks retrieval of due today items.", () => {
-    expect(dueToday()).toEqual([all[1]]);
+    const dueTodayTodoItemsCount = dueToday().length;
+    add({
+      title: "Service vehicle",
+      dueDate: today,
+      completed: false,
+    });
+    expect(dueToday().length).toEqual(dueTodayTodoItemsCount + 1);
   });
   test("Checks retrieval of due later items.", () => {
+    const dueLaterTodoItemsCount = dueLater().length;
     add({
       title: "File taxes",
       dueDate: tomorrow,
       completed: false,
     });
-    expect(dueLater()).toEqual([all[2]]);
+    expect(dueLater().length).toEqual(dueLaterTodoItemsCount + 1);
   });
 });

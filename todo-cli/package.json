@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "todo.js",
+  "type": "commonjs",
+  "eslintConfig": {
+    "configFile": ".eslintrc.json"
+  },
   "scripts": {
     "test": "jest"
   },
