@@ -1,0 +1,25 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "000asdfghjkl",
+    "database": "wd201-todo-app-dev",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "logging": false
+  },
+  "test": {
+    "username": "postgres",
+    "password": "000asdfghjkl",
+    "database": "wd201-todo-app-test",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "logging": false
+  },
+  "production": {
+    "username": "postgres",
+    "password": "000asdfghjkl",
+    "database": "wd201-todo-app-prod",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
