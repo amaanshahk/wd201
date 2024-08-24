@@ -19,10 +19,10 @@
     "lint-staged": "^15.2.9",
     "prettier": "^3.3.3"
   },
-    "lint-staged": {
+  "lint-staged": {
     "*.js": [
-      "eslint",
-      "prettier --write ."
+      "eslint --fix",
+      "prettier --write"
     ]
   }
 }
