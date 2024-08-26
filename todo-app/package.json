@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "pretest": "NODE_ENV=test npx sequelize-cli db:drop && NODE_ENV=test npx sequelize-cli db:create",
+    "test": "NODE_ENV=test jest --detectOpenHandles"
   },
   "author": "Amaan Shah K <amaanshahk123@gmail.com>",
   "license": "ISC",
@@ -20,7 +21,8 @@
     "jest": "^29.7.0",
     "lint-staged": "^15.2.9",
     "prettier": "^3.3.3",
-    "sequelize-cli": "^6.6.2"
+    "sequelize-cli": "^6.6.2",
+    "supertest": "^7.0.0"
   },
   "lint-staged": {
     "**/*.js": [
