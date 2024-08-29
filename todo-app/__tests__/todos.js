@@ -53,26 +53,43 @@ describe("Todo Application", function () {
     expect(parsedUpdateResponse.completed).toBe(true);
   });
 
-  // test("Fetches all todos in the database using /todos endpoint", async () => {
-  //   await agent.post("/todos").send({
-  //     title: "Buy xbox",
-  //     dueDate: new Date().toISOString(),
-  //     completed: false,
-  //   });
-  //   await agent.post("/todos").send({
-  //     title: "Buy ps3",
-  //     dueDate: new Date().toISOString(),
-  //     completed: false,
-  //   });
-  //   const response = await agent.get("/todos");
-  //   const parsedResponse = JSON.parse(response.text);
+  test("Fetches all todos in the database using /todos endpoint", async () => {
+    await agent.post("/todos").send({
+      title: "Buy xbox",
+      dueDate: new Date().toISOString(),
+      completed: false,
+    });
+    await agent.post("/todos").send({
+      title: "Buy ps3",
+      dueDate: new Date().toISOString(),
+      completed: false,
+    });
+    const response = await agent.get("/todos");
+    const parsedResponse = JSON.parse(response.text);
 
-  //   expect(parsedResponse.length).toBe(4);
-  //   expect(parsedResponse[3]["title"]).toBe("Buy ps3");
-  // });
+    expect(parsedResponse.length).toBe(4);
+    expect(parsedResponse[3]["title"]).toBe("Buy ps3");
+  });
 
   test("Deletes a todo with the given ID if it exists and sends a boolean response", async () => {
-    // FILL IN YOUR CODE HERE
-    expect(true).toBe(true);
+    // First, create a new todo to ensure there is one to delete
+    const response = await agent.post("/todos").send({
+      title: "To be deleted",
+      dueDate: new Date().toISOString(),
+      completed: false,
+    });
+    const parsedResponse = JSON.parse(response.text);
+    const todoID = parsedResponse.id;
+
+    // Now, delete the created todo
+    const deleteResponse = await agent.delete(`/todos/${todoID}`);
+    expect(deleteResponse.statusCode).toBe(200);
+    expect(deleteResponse.text).toBe("true"); // Expecting the response to be 'true' as a string
+
+    // Try to fetch the deleted todo to ensure it no longer exists
+    const fetchResponse = await agent.get(`/todos/${todoID}`);
+    expect(fetchResponse.statusCode).toBe(200);
+    const parsedFetchResponse = JSON.parse(fetchResponse.text);
+    expect(parsedFetchResponse).toBeNull(); // Expecting null if the todo is deleted
   });
 });

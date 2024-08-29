@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 const express = require("express");
 const app = express();
 const { Todo } = require("./models");
@@ -13,10 +11,15 @@ app.get("/", function (request, response) {
 app.get("/todos", async function (_request, response) {
   console.log("Processing list of all Todos ...");
   // FILL IN YOUR CODE HERE
-
-  // First, we have to query our PostgerSQL database using Sequelize to get list of all Todos.
-  // Then, we have to respond with all Todos, like:
-  // response.send(todos)
+  try {
+    // Query the PostgreSQL database using Sequelize to get all to-dos
+    const todos = await Todo.findAll();
+    // Respond with all to-dos
+    response.json(todos);
+  } catch (error) {
+    console.log(error);
+    return response.status(422).json(error);
+  }
 });
 
 app.get("/todos/:id", async function (request, response) {
@@ -57,6 +60,21 @@ app.delete("/todos/:id", async function (request, response) {
   // First, we have to query our database to delete a Todo by ID.
   // Then, we have to respond back with true/false based on whether the Todo was deleted or not.
   // response.send(true)
+  try {
+    // Use Sequelize to delete the todo by ID
+    const deleteCount = await Todo.destroy({
+      where: { id: request.params.id },
+    });
+
+    if (deleteCount > 0) {
+      return response.send(true); // Deletion was successful
+    } else {
+      return response.send(false); // No todo was deleted
+    }
+  } catch (error) {
+    console.log(error);
+    return response.status(500).send(false); // Server error
+  }
 });
 
 module.exports = app;
